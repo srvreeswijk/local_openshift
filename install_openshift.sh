@@ -14,4 +14,4 @@ export ES_MEMORY=2Gi
 
 
 # run the script
-curl https://raw.githubusercontent.com/srvreeswijk/local_openshift/master/installcentos/install-openshift.sh | /bin/bash
+curl -k https://raw.githubusercontent.com/srvreeswijk/local_openshift/master/installcentos/install-openshift.sh | /bin/bash
