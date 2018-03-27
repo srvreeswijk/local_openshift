@@ -7,6 +7,9 @@ export USERNAME=vagrant
 # Password for the user
 export PASSWORD=vagrant
 
+# Openshift elasticsearch max memory size
+export ES_MEMORY=2Gi
+
 # Prepare for extra disk
 
 
