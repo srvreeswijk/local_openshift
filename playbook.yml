@@ -44,32 +44,21 @@
         name: pyOpenSSL
         enablerepo: epel
         state: latest
-    - name: pull openshift-ansible git repo versie 3.9
+    - name: pull openshift-ansible git repo versie 3.7
       git:
         repo: 'https://github.com/openshift/openshift-ansible'
         dest: /opt/openshift-ansible
         version: release-3.9
-    - name: install dnsmasq
-      yum: 
-        name: dnsmasq
-        state: latest
-    - name: set dnsmasq config
-      copy:
-        src: dnsmasq.conf
-        dest: /etc/dnsmasq.conf
-        owner: root
-        group: root
-        mode: 0644
     - name: create openshift install script
       copy:
         src: install_openshift.sh
         dest: /opt/install_openshift.sh
-        owner: vagrant
-        group: vagrant
+        owner: root
+        group: root
         mode: 0744
   handlers:
     - name: enable docker
       service: 
-        name: dockerd 
+        name: docker
         enabled: yes 
         state: started

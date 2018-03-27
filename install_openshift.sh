@@ -11,4 +11,4 @@ export PASSWORD=vagrant
 
 
 # run the script
-sudo curl https://raw.githubusercontent.com/gshipley/installcentos/master/install-openshift.sh | /bin/bash
+curl https://raw.githubusercontent.com/srvreeswijk/local_openshift/master/installcentos/install-openshift.sh | /bin/bash
