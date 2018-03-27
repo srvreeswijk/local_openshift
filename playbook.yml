@@ -1,0 +1,75 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: ensure needed packages are installed and up to date
+      yum: state=present name={{ item }}
+      with_items:
+      - wget
+      - docker
+      - git
+      - net-tools
+      - bind-utils
+      - iptables-services
+      - bridge-utils
+      - bash-completion
+      - kexec-tools
+      - sos
+      - psacct
+      - chrony
+      notify:
+      - enable docker
+    - name: upgrade all packages
+      yum:
+        name: '*'
+        state: latest
+    - name: Add epel repository
+      yum_repository:
+        name: epel
+        description: EPEL YUM repo
+        baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+    - name: disable the epel repo
+      lineinfile:
+        path: /etc/yum.repos.d/epel.repo
+        regexp: '^enabled='
+        line: 'enabled=0'
+    - name: install ansible from epel repo
+      yum:
+        name: ansible
+        enablerepo: epel
+        state: latest
+    - name: install pyOpenSSL from epel repo
+      yum:
+        name: pyOpenSSL
+        enablerepo: epel
+        state: latest
+    - name: pull openshift-ansible git repo versie 3.9
+      git:
+        repo: 'https://github.com/openshift/openshift-ansible'
+        dest: /opt/openshift-ansible
+        version: release-3.9
+    - name: install dnsmasq
+      yum: 
+        name: dnsmasq
+        state: latest
+    - name: set dnsmasq config
+      copy:
+        src: dnsmasq.conf
+        dest: /etc/dnsmasq.conf
+        owner: root
+        group: root
+        mode: 0644
+    - name: create openshift install script
+      copy:
+        src: install_openshift.sh
+        dest: /opt/install_openshift.sh
+        owner: vagrant
+        group: vagrant
+        mode: 0744
+  handlers:
+    - name: enable docker
+      service: 
+        name: dockerd 
+        enabled: yes 
+        state: started
