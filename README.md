@@ -6,9 +6,10 @@ This will install an working openshift environment inside an vagrant centos-7 bo
 Openshift will run in docker containers. 
 And the oc command will be available in the centos shell under the root user. 
 
+site: https://10.10.0.4:8443/console (changable in the VAgrantfile)
 oc user = vagrant
 oc pw   = vagrant
-These values can be changed in the install_openshift.sh script. 
+The username and password can be changed in the install_openshift.sh script. 
 
 ## prerequisites:
 - virtualbox (I dit not test any other hypervisor)
